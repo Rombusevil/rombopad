@@ -62,7 +62,7 @@ class Main(object):
         tmpPad =  self.pads[padNumber].getTmpAudioPath()
 
         # Creates metronome wave file
-        print("write metronome with bpm: "+str(bpm))
+        print("Write metronome with bpm: "+str(bpm))
         mFile = self.Metronome.writeMetronome(bpm,(countBars*barBeats)+beatsToRecord)
 
         # Creo el thread de playback para grabar en este pad

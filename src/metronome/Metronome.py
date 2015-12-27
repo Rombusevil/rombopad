@@ -44,7 +44,7 @@ class Metronome(object):
         duration = self._getFramesDuration(bpm, cantBeats) # Duration of the output audio file (in frames)
 
         # Creates the output file with it's wave header
-        outPath = "metronome"+str(bpm)+".wav"
+        outPath = os.path.dirname(__file__)+"/generated/metronome"+str(bpm)+".wav"
         wOut = wave.open(outPath,"w")
         wOut.setparams((self.num_channels, (self.bit_depth // self.bits_per_byte), self.frame_rate, duration, 'NONE', 'not compressed'))
 
