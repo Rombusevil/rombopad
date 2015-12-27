@@ -26,13 +26,13 @@ class Recorder(LatencyObject):
         self.channels = channels
         self.rate = rate
         self.fpb = framesPerBuffer
-        self._pa = pyaudio.PyAudio()
         self._stream = None
         self.latency = None
         self.bits_per_byte = 8
         self.bitDepth = bitDepth
 
     def startRecording(self, fileName):
+        self._pa = pyaudio.PyAudio()
         self.wavefile = wave.open(fileName, 'wb')
         self.wavefile.setnchannels(self.channels)
         self.wavefile.setsampwidth(self._pa.get_sample_size(pyaudio.paInt16))
