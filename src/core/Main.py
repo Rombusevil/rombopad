@@ -51,7 +51,7 @@ class Main(object):
         # States
         self.rState = RecordState(self)
         self.pState = PlaybackState(self)
-        self.State = self.pState
+        self.State = self.pState    # It's on playing state by default
 
 
     def play(self, padNumber):

@@ -17,10 +17,9 @@ __author__ = 'Iber Parodi Siri'
     You should have received a copy of the GNU General Public License
     along with Rombopad.  If not, see <http://www.gnu.org/licenses/>.
 """
-
-
-from gi.repository import Gtk
+import os
 from core.Main import Main
+from gi.repository import Gtk
 
 class Handler:
     def __init__(self, backend, builder):
@@ -39,14 +38,14 @@ class Handler:
         self.Backend.State = self.Backend.rState if Gtk.ToggleButton.get_active(btn) else self.Backend.pState
 
         # Toggles the state of the other button
-        playBtn = builder.get_object("statePlayBtn")
+        playBtn = self.builder.get_object("statePlayBtn")
         Gtk.ToggleButton.set_active(playBtn, not Gtk.ToggleButton.get_active(btn) )
 
     def playBtnToggled(self, btn):
         self.Backend.State = self.Backend.pState if Gtk.ToggleButton.get_active(btn) else self.Backend.rState
 
         # Toggles the state of the other button
-        recBtn = builder.get_object("stateRecBtn")
+        recBtn = self.builder.get_object("stateRecBtn")
         Gtk.ToggleButton.set_active(recBtn, not Gtk.ToggleButton.get_active(btn) )
 
     """ Pads
@@ -58,7 +57,7 @@ class Handler:
 
         try:
             self.Backend.State.clicked(padNumber, int(self.BPM), barBeats, countBars, int(self.BTR))
-        except None:
+        except:
             print("Uninitialized values!!!")
 
 
@@ -91,23 +90,28 @@ class Handler:
 
 """ ############################################################################ """
 
-builder = Gtk.Builder()
-builder.add_from_file("gui.glade")
 
-handler = Handler( Main(), builder)
-builder.connect_signals( handler )
+def main():
+    builder = Gtk.Builder()
+    builder.add_from_file(os.path.dirname(__file__)+ "/gui.glade")
 
-# Widgets UI
-window = builder.get_object("mainWindow")
-bpmSpinner = builder.get_object("tempoSp")
-btRecord = builder.get_object("recordBeatsSp")
+    handler = Handler( Main(), builder)
+    builder.connect_signals( handler )
 
-# Spinners config
-bpmAdj = Gtk.Adjustment(value=120, lower=30, upper=300, step_incr=1, page_incr=10, page_size=10)
-btRecordAdj = Gtk.Adjustment(value=4, lower=1, upper=100, step_incr=1, page_incr=10, page_size=10)
-bpmSpinner.set_adjustment(bpmAdj)
-btRecord.set_adjustment(btRecordAdj)
+    # Widgets UI
+    window = builder.get_object("mainWindow")
+    bpmSpinner = builder.get_object("tempoSp")
+    btRecord = builder.get_object("recordBeatsSp")
 
-window.show_all()
+    # Spinners config
+    bpmAdj = Gtk.Adjustment(value=120, lower=30, upper=300, step_incr=1, page_incr=10, page_size=10)
+    btRecordAdj = Gtk.Adjustment(value=4, lower=1, upper=100, step_incr=1, page_incr=10, page_size=10)
+    bpmSpinner.set_adjustment(bpmAdj)
+    btRecord.set_adjustment(btRecordAdj)
 
-Gtk.main()
+    window.show_all()
+
+    Gtk.main()
+
+if __name__ == "__main__":
+    main()

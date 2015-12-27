@@ -24,8 +24,8 @@ __author__ = 'Iber Parodi Siri'
     This class is able of generating wave files with metronome data.
     It depends on common/Player.py for playing the metronome wav file.
 """
+import wave, os
 from common.Player import Player
-import wave
 
 class Metronome(object):
     def __init__(self, chunk=1024, frameRate=44100, bitDepth=16, numChannels=2):
@@ -49,7 +49,8 @@ class Metronome(object):
         wOut.setparams((self.num_channels, (self.bit_depth // self.bits_per_byte), self.frame_rate, duration, 'NONE', 'not compressed'))
 
         # Reads beat sound in memory
-        beatPath= '../metronome/beat.wav'
+
+        beatPath= os.path.dirname(__file__)+'/beat.wav'
         beatData = self._getBeatData(beatPath)
         beatSound = b''.join(b for b in beatData)
 
