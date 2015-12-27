@@ -20,22 +20,16 @@ __author__ = 'Iber Parodi Siri'
 
 class Pad(object):
     def __init__(self, padNumber): #, Player, Recorder):
-#        self.Player = Player
-#        self.Recorder = Recorder
-        self.audioPath = "/home/rombus/.rombopad/pad"+str(padNumber)+".wav"
-
-
-    """ Tells the player object to play this pad's audio
-    """
-#    def play(self):
-#        self.Player.playFile(self.audioPath)
-
-    """ Tells the recorder object to record this pad's audio
-    """
-#    def record(self, duration):
-#        self.Recorder.recordFile(duration)
+        path = "/home/rombus/.rombopad/"
+        self.audioPath   = path+ "pad"  +str(padNumber)+".wav"
+        self.tmpAudioPath= path+ ".pad" +str(padNumber)+".wav"
 
     """ Returns the wave file path associated with this pad
     """
     def getAudioPath(self):
         return self.audioPath
+
+    """ Returns the wave file path associated with this pad tmp file
+    """
+    def getTmpAudioPath(self):
+        return self.tmpAudioPath

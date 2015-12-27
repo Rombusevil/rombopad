@@ -29,10 +29,11 @@ from core.states.PlaybackState import PlaybackState
 
 class Main(object):
     def __init__(self):
+        # Audio config
         self.chunk = 1024
         self.frameRate = 44100
         self.bitDepth = 16
-        self.numChannels = 1
+        self.numChannels = 2
 
         # Init audio IO
         self.Recorder = Recorder(self.bitDepth, self.numChannels, self.frameRate, self.chunk)
@@ -42,7 +43,7 @@ class Main(object):
         self.cantPads = 8
         self.pads = []
         for pad in range(0,self.cantPads+1):
-            self.pads.append(Pad(pad))       #, self.Player, self.Recorder))
+            self.pads.append(Pad(pad))
 
         # Init metronome
         self.Metronome = Metronome(self.chunk, self.frameRate, self.bitDepth, self.numChannels)
@@ -58,9 +59,10 @@ class Main(object):
 
     def record(self, padNumber, bpm, barBeats, countBars, beatsToRecord):
         # Creates a temp file for recording
-        tmpPad =  self.pads[padNumber].getAudioPath()+".tmp"
+        tmpPad =  self.pads[padNumber].getTmpAudioPath()
 
         # Creates metronome wave file
+        print("write metronome with bpm: "+str(bpm))
         mFile = self.Metronome.writeMetronome(bpm,(countBars*barBeats)+beatsToRecord)
 
         # Creo el thread de playback para grabar en este pad
