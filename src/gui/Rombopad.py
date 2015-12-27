@@ -33,7 +33,7 @@ class Handler:
     def onDeleteWindow(self, *args):
         Gtk.main_quit(*args)
 
-    """ Toggles de rec/play
+    """ Rec/Play toggles
     """
     def recBtnToggled(self, btn):
         self.Backend.State = self.Backend.rState if Gtk.ToggleButton.get_active(btn) else self.Backend.pState
@@ -49,17 +49,17 @@ class Handler:
         recBtn = builder.get_object("stateRecBtn")
         Gtk.ToggleButton.set_active(recBtn, not Gtk.ToggleButton.get_active(btn) )
 
-    """
-       Pads
+    """ Pads
     """
     def padClicked(self, padNumber):
-        barBeats = 4
-        countBars = 2
+        # TODO make this values user configurable by GUI
+        barBeats = 4    # Number of beats in one bar
+        countBars = 2   # Number of bars that the metronome will count before start recording
 
         try:
             self.Backend.State.clicked(padNumber, int(self.BPM), barBeats, countBars, int(self.BTR))
         except None:
-            print("No se cuantos beats grabar!!!")
+            print("Uninitialized values!!!")
 
 
 
@@ -80,26 +80,19 @@ class Handler:
     def p8Click(self, btn):
         self.padClicked(8)
 
-    """
-        Spinners
+    """ Spinners
     """
     def bpmSpinner(self, spinButton):
         self.BPM = spinButton.get_value()
-        print(" Setted BPM: "+ str(spinButton.get_value()))
 
     def btrSpinner(self, spinButton):
         self.BTR = spinButton.get_value()
-        print(" Setted BTR: "+str(spinButton.get_value()))
 
 
+""" ############################################################################ """
 
-
-
-
-# El main está apartir de esta línea
 builder = Gtk.Builder()
-builder.add_from_file("gui.xml")
-
+builder.add_from_file("gui.glade")
 
 handler = Handler( Main(), builder)
 builder.connect_signals( handler )
@@ -109,16 +102,11 @@ window = builder.get_object("mainWindow")
 bpmSpinner = builder.get_object("tempoSp")
 btRecord = builder.get_object("recordBeatsSp")
 
-# Spinners
+# Spinners config
 bpmAdj = Gtk.Adjustment(value=120, lower=30, upper=300, step_incr=1, page_incr=10, page_size=10)
 btRecordAdj = Gtk.Adjustment(value=4, lower=1, upper=100, step_incr=1, page_incr=10, page_size=10)
-
 bpmSpinner.set_adjustment(bpmAdj)
 btRecord.set_adjustment(btRecordAdj)
-
-
-
-print(type(bpmSpinner))
 
 window.show_all()
 
