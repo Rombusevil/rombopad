@@ -1,6 +1,10 @@
 # rombopad
 Gnome App for recording loops with an octapad like interface for sequencing.
 
+
+![alt tag](https://github.com/Rombusevil/rombopad/blob/master/docs/rombopad.png)
+
+
 Rombopad is intended as a tool for arranging a musical composition.
 
 It has a precise built in metronome and it records a predefined amount of beats,
@@ -32,3 +36,4 @@ Notice:
   * If you start a recording, you can't stop it. It will stop by itself when there are no more beats to record.
   * Avoid using "long" recording settings. When cropping, the audio file is held entirely in memory.
   * Pads are sequenced, once a pad started playing it won't stop until it finishes.
+  * Class diagram is outdated.
