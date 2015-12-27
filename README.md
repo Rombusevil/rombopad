@@ -29,6 +29,7 @@ How to use:
 Dependencies:
   * Python3.4
   * PyAudio
+  * Gtk+3
 
 
 Notice:
