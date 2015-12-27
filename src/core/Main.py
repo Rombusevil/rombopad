@@ -83,12 +83,12 @@ class Main(object):
         # Now crop the temp file into the final file
         outFile = self.pads[padNumber].getAudioPath()
 
-        # Create new AudioCropper in case bpm settings have changed.
+        # Create new AudioCropper every time in case bpm settings have changed.
         # With this the file is cropped to the exact length needed
         cropper = AudioCropper(bpm, barBeats, countBars, inLatency, outLatency)
         cropper.getValidRecording(tmpPad, outFile, beatsToRecord)
 
-        # Elimino el archivo temporal
+        # Delete temp file
         os.remove(tmpPad)
 
 

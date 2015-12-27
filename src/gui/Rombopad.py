@@ -23,7 +23,6 @@ from gi.repository import Gtk
 from core.Main import Main
 
 class Handler:
-    # Inicializo las variables para que esté en reproducción
     def __init__(self, backend, builder):
         self.Backend = backend
         self.builder = builder
@@ -31,34 +30,24 @@ class Handler:
         self.BPM = None # Beats per minute
         self.BTR = None # Beats to record
 
-
-    # Mato el proceso cuando cierran la ventana
     def onDeleteWindow(self, *args):
         Gtk.main_quit(*args)
 
-
-
-    """
-        Toggles de rec y play
+    """ Toggles de rec/play
     """
     def recBtnToggled(self, btn):
-        if(Gtk.ToggleButton.get_active(btn)):
-            self.Backend.State = self.Backend.rState
-        else:
-            self.Backend.State = self.Backend.pState
+        self.Backend.State = self.Backend.rState if Gtk.ToggleButton.get_active(btn) else self.Backend.pState
 
+        # Toggles the state of the other button
         playBtn = builder.get_object("statePlayBtn")
         Gtk.ToggleButton.set_active(playBtn, not Gtk.ToggleButton.get_active(btn) )
 
     def playBtnToggled(self, btn):
-        if(Gtk.ToggleButton.get_active(btn)):
-            self.Backend.State = self.Backend.pState
-        else:
-            self.Backend.State = self.Backend.rState
+        self.Backend.State = self.Backend.pState if Gtk.ToggleButton.get_active(btn) else self.Backend.rState
 
-        playBtn = builder.get_object("stateRecBtn")
-        Gtk.ToggleButton.set_active(playBtn, not Gtk.ToggleButton.get_active(btn) )
-
+        # Toggles the state of the other button
+        recBtn = builder.get_object("stateRecBtn")
+        Gtk.ToggleButton.set_active(recBtn, not Gtk.ToggleButton.get_active(btn) )
 
     """
        Pads

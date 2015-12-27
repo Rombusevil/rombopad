@@ -17,10 +17,11 @@ __author__ = 'Iber Parodi Siri'
     You should have received a copy of the GNU General Public License
     along with Rombopad.  If not, see <http://www.gnu.org/licenses/>.
 """
+from os.path import expanduser
 
 class Pad(object):
     def __init__(self, padNumber): #, Player, Recorder):
-        path = "/home/rombus/.rombopad/"
+        path = expanduser("~") + "/.rombopad/"
         self.audioPath   = path+ "pad"  +str(padNumber)+".wav"
         self.tmpAudioPath= path+ ".pad" +str(padNumber)+".wav"
 
