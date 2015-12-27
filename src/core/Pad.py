@@ -21,7 +21,7 @@ from os.path import expanduser
 
 class Pad(object):
     def __init__(self, padNumber): #, Player, Recorder):
-        path = expanduser("~") + "/.rombopad/"
+        path = self._getPath(self)
         self.audioPath   = path+ "pad"  +str(padNumber)+".wav"
         self.tmpAudioPath= path+ ".pad" +str(padNumber)+".wav"
 
@@ -34,3 +34,19 @@ class Pad(object):
     """
     def getTmpAudioPath(self):
         return self.tmpAudioPath
+
+
+    """ Static method for converting padNumber into it's corresponding audio path
+    """
+    @staticmethod
+    def getPathFromNumber(self, padNumber):
+        path = self._getPath(self)
+        return path+ "pad"  +str(padNumber)+".wav"
+
+
+    """ My take on static variables
+        If you want to change the base path, do it here.
+    """
+    @staticmethod
+    def _getPath(self):
+        return expanduser("~") + "/.rombopad/"

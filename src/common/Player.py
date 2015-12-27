@@ -47,8 +47,7 @@ class Player(LatencyObject):
         # Store stream latency
         self.latency = stream.get_output_latency()
 
-        # Play metronome
-        print("Metronome started")
+        # Play sound
         while True:
             data = wIn.readframes(self.chunk)
             stream.write(data)

@@ -17,7 +17,7 @@ __author__ = 'Iber Parodi Siri'
     You should have received a copy of the GNU General Public License
     along with Rombopad.  If not, see <http://www.gnu.org/licenses/>.
 """
-import threading, time, os
+import threading, time, os, queue
 from core.Pad import Pad
 from common.Player import Player
 from core.Recorder import Recorder
@@ -53,16 +53,46 @@ class Main(object):
         self.pState = PlaybackState(self)
         self.State = self.pState    # It's on playing state by default
 
+        # Queue player
+        self.queue = queue.Queue()
+        self.stopEvent = threading.Event()
 
+        def queuePlayer(self, stopEvent):
+            while not stopEvent.is_set():
+                if(not self.queue.empty()):
+                    self.Player.playFile(self.queue.get())
+                else:
+                    time.sleep(1)   # Queue is empty, sleep to reduce cpu usage
+        self.playerThread = threading.Thread(target=queuePlayer, args=(self, self.stopEvent))
+        self.playerThread.start()
+
+
+    """ Stops queuePlayer thread
+    """
+    def clearThreads(self):
+        self.stopEvent.set()
+
+
+    """ Fill the queue with Pad's sound path
+    """
     def play(self, padNumber):
-        self.Player.playFile(self.pads[padNumber].getAudioPath())
+        self.queue.put(Pad.getPathFromNumber(Pad, padNumber))
 
+    """ Empty player queue
+    """
+    def stop(self):
+        # TODO This doesn't stop playback, it just cleans playing queue
+        with self.queue.mutex:
+            self.queue.queue.clear()
+
+    """ Plays 8 beats and then starts recording.
+        Finally it crops output file in order to make it the exact length wanted
+    """
     def record(self, padNumber, bpm, barBeats, countBars, beatsToRecord):
         # Creates a temp file for recording
         tmpPad =  self.pads[padNumber].getTmpAudioPath()
 
         # Creates metronome wave file
-        print("Write metronome with bpm: "+str(bpm))
         mFile = self.Metronome.writeMetronome(bpm,(countBars*barBeats)+beatsToRecord)
 
         # Creo el thread de playback para grabar en este pad
@@ -90,6 +120,4 @@ class Main(object):
 
         # Delete temp file
         os.remove(tmpPad)
-
-
 

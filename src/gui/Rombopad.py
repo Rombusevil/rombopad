@@ -30,6 +30,7 @@ class Handler:
         self.BTR = None # Beats to record
 
     def onDeleteWindow(self, *args):
+        self.Backend.clearThreads()
         Gtk.main_quit(*args)
 
     """ Rec/Play toggles
@@ -55,11 +56,7 @@ class Handler:
         barBeats = 4    # Number of beats in one bar
         countBars = 2   # Number of bars that the metronome will count before start recording
 
-        try:
-            self.Backend.State.clicked(padNumber, int(self.BPM), barBeats, countBars, int(self.BTR))
-        except:
-            print("Uninitialized values!!!")
-
+        self.Backend.State.clicked(padNumber, int(self.BPM), barBeats, countBars, int(self.BTR))
 
 
     def p1Click(self, btn):
@@ -86,6 +83,11 @@ class Handler:
 
     def btrSpinner(self, spinButton):
         self.BTR = spinButton.get_value()
+
+    """ Stop btn
+    """
+    def stopBtnClicked(self, btn):
+        self.Backend.stop()
 
 
 """ ############################################################################ """
