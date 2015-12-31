@@ -14,7 +14,7 @@ this results in a looping audio file without the need of manually cropping.
 Launching the app (inside src directory):
   **python3.4 run.py**
 
-How to use:
+### How to use:
   * Define BPM in the bottom left spinner.
   * Define the amount of beats to record in the bottom right spinner. Let's say, 8 beats for example.
   * Select Recording mode in the header bar.
@@ -26,13 +26,13 @@ How to use:
   * If you click multiple pads, the sounds will queue up.
   
 
-Dependencies:
+### Dependencies:
   * Python3.4
   * PyAudio
   * Gtk+3
 
 
-Notice:
+### Notice:
   * It's in beta stage.
   * If you start a recording, you can't stop it. It will stop by itself when there are no more beats to record.
   * Avoid using "long" recording settings. When cropping, the audio file is held entirely in memory.
